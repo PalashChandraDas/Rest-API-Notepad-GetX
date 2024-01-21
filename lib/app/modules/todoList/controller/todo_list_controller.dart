@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ndialog/ndialog.dart';
 import 'package:rest_api_notepad/app/modules/addTodo/controller/add_todo_controller.dart';
 import 'package:rest_api_notepad/utils/app_constant.dart';
 
@@ -18,29 +20,34 @@ class TodoListController extends GetxController {
   void onInit() {
     super.onInit();
     fetchTodo();
+
   }
 
   Future<void> fetchTodo() async {
-    // Get.defaultDialog(
-    //     content: const Row(children: [
-    //       CircularProgressIndicator(),
-    //       Text('Loading', style: TextStyle(fontWeight: FontWeight.bold,
-    //           fontSize: 20),)
-    //     ],)
-    // );
-    isLoading.value = true;
-    var response = await _todoService.readTodo();
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.body) as Map;
-      final result = json['items'] as List;
 
-      items.value = result;
-      isLoading.value = false;
+    try{
 
-      log('length===== ${items.length}');
-    } else {
-      //error
       isLoading.value = true;
+
+      var response = await _todoService.readTodo();
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body) as Map;
+        final result = json['items'] as List;
+
+        items.value = result;
+
+        log('length===== ${items.length}');
+        print(response.body);
+      } else {
+        //error
+        isLoading.value = true;
+
+      }
+
+    } catch (e) {
+      log('error--------------> $e');
+    } finally{
+      isLoading.value = false;
     }
 
   }
@@ -59,6 +66,8 @@ class TodoListController extends GetxController {
       AppConstant.showErrorMessage(message: 'Deletion Failed', context: Get.context!);
     }
   }
+
+
 
 
 }

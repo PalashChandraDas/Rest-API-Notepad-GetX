@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ndialog/ndialog.dart';
 import 'package:rest_api_notepad/app/modules/todoList/controller/todo_list_controller.dart';
 import 'package:rest_api_notepad/service/todo_service.dart';
 import 'package:rest_api_notepad/utils/app_constant.dart';
+
 
 class AddTodoController extends GetxController {
   TextEditingController titleController = TextEditingController();
@@ -15,7 +17,7 @@ class AddTodoController extends GetxController {
   int? get selectedIndex => _selectedIndex;
 
 
-  void submitData() async {
+  void submitData(context) async {
     //Get the data from form
     var isSuccess = await _todoService.todoPost(
         title: titleController.text,
@@ -38,6 +40,7 @@ class AddTodoController extends GetxController {
   }
 
   void updateData() async {
+    log('updateData()-------------');
     //Update the data from form
     _existTodoList = Get.arguments['updateItem'];
     final id = _existTodoList!['_id'];
@@ -47,7 +50,7 @@ class AddTodoController extends GetxController {
         title: titleController.text,
         description: descriptionController.text,
         id: id);
-    if (isSuccess) {
+        if (isSuccess) {
       AppConstant.showSuccessMessage(message: 'Update creation successfully', context: Get.context!);
       Get.back();
       log('back++++++++++++');
@@ -62,7 +65,7 @@ class AddTodoController extends GetxController {
     log('editNote() called--------------');
     _selectedIndex = index;
 
-    log('existTodoList::::::::::::$existTodoList');
+    log('existTodoList::$existTodoList');
     var title = existTodoList['title'];
     var description = existTodoList['description'];
 

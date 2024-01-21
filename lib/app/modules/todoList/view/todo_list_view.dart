@@ -28,7 +28,7 @@ class TodoListView extends GetView<TodoListController> {
       body: Obx(() => Visibility(
             visible: controller.isLoading.value,
             replacement: RefreshIndicator(
-              onRefresh: controller.fetchTodo,
+              onRefresh: () => controller.fetchTodo(),
               child: Visibility(
                 visible: controller.items.isNotEmpty,
                 replacement: Center(

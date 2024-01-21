@@ -10,8 +10,9 @@ class AddTodoView extends GetView<AddTodoController> {
     Get.put(AddTodoController());
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.selectedIndex == null ? 'Add Todo' : 'Edit Todo'),
-      ),
+        title:
+            Text(controller.selectedIndex == null ? 'Add Todo' : 'Edit Todo'),
+         ),
       body: ListView(
         padding: const EdgeInsets.all(30),
         children: [
@@ -38,7 +39,9 @@ class AddTodoView extends GetView<AddTodoController> {
           ),
           ElevatedButton(
               onPressed: controller.selectedIndex == null
-                  ? controller.submitData
+                  ? () {
+                      controller.submitData(context);
+                    }
                   : controller.updateData,
               child: Text(controller.selectedIndex == null ? 'Submit' : 'Update'))
         ],

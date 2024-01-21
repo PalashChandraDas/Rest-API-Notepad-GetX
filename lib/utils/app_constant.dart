@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ndialog/ndialog.dart';
+import 'package:get/get.dart';
 
 class AppConstant{
 
@@ -16,5 +18,7 @@ class AppConstant{
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
+ static ProgressDialog kProgressDialog = ProgressDialog(Get.context!, message: const Text('Loading...'));
 
 }
