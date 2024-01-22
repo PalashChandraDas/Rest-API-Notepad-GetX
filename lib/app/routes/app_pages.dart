@@ -5,8 +5,8 @@ import 'package:rest_api_notepad/app/routes/app_routes.dart';
 
 class AppPages{
   static var pageList = [
-    GetPage(name: AppRoutes.todoList, page: () => TodoListView(),),
-    GetPage(name: AppRoutes.addTodo, page: () =>AddTodoView())
+    GetPage(name: AppRoutes.todoList, page: () => const TodoListView(),),
+    GetPage(name: AppRoutes.addTodo, page: () =>const AddTodoView())
   ];
 
 

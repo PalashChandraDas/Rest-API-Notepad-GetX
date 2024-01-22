@@ -12,13 +12,14 @@ class AppConstant{
 
   static showErrorMessage({required String message, required BuildContext context}){
     final snackBar = SnackBar(content: Text(message,
-      style: TextStyle(color: Colors.white),),
+      style: const TextStyle(color: Colors.white),),
       backgroundColor: Colors.red,
 
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+ // ignore: missing_required_param
  static ProgressDialog kProgressDialog = ProgressDialog(Get.context!, message: const Text('Loading...'));
 
 }

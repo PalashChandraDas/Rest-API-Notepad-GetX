@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ndialog/ndialog.dart';
 import 'package:rest_api_notepad/app/modules/addTodo/controller/add_todo_controller.dart';
 import 'package:rest_api_notepad/utils/app_constant.dart';
 
 import '../../../../service/todo_service.dart';
-
 
 class TodoListController extends GetxController {
   RxList items = [].obs;
@@ -20,15 +17,11 @@ class TodoListController extends GetxController {
   void onInit() {
     super.onInit();
     fetchTodo();
-
   }
 
   Future<void> fetchTodo() async {
-
-    try{
-
+      try {
       isLoading.value = true;
-
       var response = await _todoService.readTodo();
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body) as Map;
@@ -37,37 +30,33 @@ class TodoListController extends GetxController {
         items.value = result;
 
         log('length===== ${items.length}');
-        print(response.body);
+        // print(response.body);
       } else {
         //error
         isLoading.value = true;
-
       }
-
     } catch (e) {
       log('error--------------> $e');
-    } finally{
+    } finally {
       isLoading.value = false;
     }
-
   }
 
   Future<void> deleteById({required String id}) async {
-    // Delete the item
-    var isSuccess = await _todoService.todoDelete(id: id);
 
-    if (isSuccess) {
-      // Remove item from the list
-      final filtered = items.where((element) => element['_id'] != id).toList();
-      items.value = filtered;
-      AppConstant.showSuccessMessage(message: 'Successfully Deleted', context: Get.context!);
-    } else {
-      // Show error
-      AppConstant.showErrorMessage(message: 'Deletion Failed', context: Get.context!);
-    }
+      // Delete the item
+      var isSuccess = await _todoService.todoDelete(id: id);
+
+      if (isSuccess) {
+        // Remove item from the list
+        final filtered = items.where((element) => element['_id'] != id).toList();
+        items.value = filtered;
+        AppConstant.showSuccessMessage(
+            message: 'Successfully Deleted', context: Get.context!);
+      } else {
+        // Show error
+        AppConstant.showErrorMessage(
+            message: 'Deletion Failed', context: Get.context!);
+      }
   }
-
-
-
-
 }
